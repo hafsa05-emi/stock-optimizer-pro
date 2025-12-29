@@ -1,13 +1,43 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Layout } from "@/components/Layout";
+import { DataImport } from "@/components/sections/DataImport";
+import { Transformation } from "@/components/sections/Transformation";
+import { TopsisClassic } from "@/components/sections/TopsisClassic";
+import { FuzzyTopsis } from "@/components/sections/FuzzyTopsis";
+import { MLComparison } from "@/components/sections/MLComparison";
+import { useAnalysisStore } from "@/store/analysisStore";
+import { Helmet } from "react-helmet";
 
 const Index = () => {
+  const { activeSection } = useAnalysisStore();
+
+  const renderSection = () => {
+    switch (activeSection) {
+      case 0:
+        return <DataImport />;
+      case 1:
+        return <Transformation />;
+      case 2:
+        return <TopsisClassic />;
+      case 3:
+        return <FuzzyTopsis />;
+      case 4:
+        return <MLComparison />;
+      default:
+        return <DataImport />;
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <>
+      <Helmet>
+        <title>Analyse ABC Multi-Critères | TOPSIS & Fuzzy MCDM</title>
+        <meta 
+          name="description" 
+          content="Plateforme d'analyse décisionnelle multi-attributs pour la classification ABC des stocks avec TOPSIS, Fuzzy Logic et Machine Learning. Développé pour Prof. Lamrani - EMI Rabat." 
+        />
+      </Helmet>
+      <Layout>{renderSection()}</Layout>
+    </>
   );
 };
 
